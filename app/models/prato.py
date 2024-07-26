@@ -1,13 +1,29 @@
 from pydantic import BaseModel, Field
-from typing import List
 
-class Prato(BaseModel):
-    nome: str = Field(..., example="Strogonoff")
-    informacao_nutricional: str = Field(..., example="12 kcal")
+class PratoRequest(BaseModel):
+    nome: str = Field(..., example="Strogonoff de Carne")
+    informacao_nutricional: str = Field(..., example="125 kcal")
+    # ter classe informacao_nutricional?
     
-class ListaPrato(BaseModel):
-    pratos: List[Prato] = Field(..., example=[{"nome": "Strogonoff", "informacao_nutricional": "12 kcal"}])
+    def getNome(self):
+        return self.nome
     
-    def adicionaPrato(self, prato: Prato):
-        self.pratos.append(prato)
-        return prato
+    def setNome(self, nome: str):
+        self.nome = nome
+    
+    def getInformacaoNutricional(self):
+        return self.informacao_nutricional
+    
+    def setInformacaoNutricional(self, informacao_nutricional: str):
+        self.informacao_nutricional = informacao_nutricional
+
+class Prato(PratoRequest):
+    idPrato: int = Field(..., example=1)
+    
+    def getIdPrato(self):
+        return self.idPrato
+    
+    # def __init__(self, idPrato: int, nome: str, informacao_nutricional: str):
+    #     self.idPrato = idPrato
+    #     self.nome = nome
+    #     self.informacao_nutricional = informacao_nutricional

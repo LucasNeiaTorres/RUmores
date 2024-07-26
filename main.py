@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from app.routes import prato
+from app.views import prato_view
 from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -10,11 +10,10 @@ app = FastAPI(
     version="0.0.1",
 )
 
-app.include_router(prato.router)
+app.include_router(prato_view.router)
 
 # CORS
 origins = [
-    "http://localhost:4200",
     '*'
 ]
 
