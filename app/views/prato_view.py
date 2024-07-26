@@ -36,8 +36,8 @@ async def excluirPrato(idPrato: int):
 
 @router.get("/", response_model=List[Prato])
 async def ObterListaPratos():
-    PratoList = PratoController.getListaPratos() 
-    return PratoList
+    pratoList = PratoController.getListaPratos() 
+    return pratoList
 
 # @router.get("/informacaoNutricional/{idPrato}", response_model=str)
 # async def read_info_prato(idPrato: int):

@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from app.views import prato_view
+from app.views import prato_view, estudante_view
 from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,6 +11,7 @@ app = FastAPI(
 )
 
 app.include_router(prato_view.router)
+app.include_router(estudante_view.router)
 
 # CORS
 origins = [
