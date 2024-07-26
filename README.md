@@ -5,4 +5,4 @@
 4) `uvicorn main:app --reload` 
 
 # Como acessar a API
-Acesse `[http://](http://localhost:8000/docs)
+Acesse `[http://localhost:8000/docs](http://localhost:8000/docs)
