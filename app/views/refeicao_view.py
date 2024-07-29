@@ -11,6 +11,8 @@ router = APIRouter(
 @router.post("/", response_model=Refeicao)
 async def adicionarRefeicao(refeicao: RefeicaoRequest):
     nova_refeicao = RefeicaoController.adicionarRefeicao(refeicao)
+    if nova_refeicao is None:
+        raise HTTPException(status_code=404, detail="Cardápio não encontrado")
     return nova_refeicao
 
 @router.get("/{idRefeicao}", response_model=Refeicao)
@@ -24,7 +26,7 @@ async def selecionaRefeicao(idRefeicao: int):
 async def editarRefeicao(idRefeicao: int, nova_refeicao: RefeicaoRequest):
     refeicao = RefeicaoController.editarRefeicao(idRefeicao, nova_refeicao)
     if refeicao is None:
-        raise HTTPException(status_code=404, detail="Refeição não encontrada")
+        raise HTTPException(status_code=404, detail="Refeição ou Cardápio não encontrados")
     return refeicao
 
 @router.delete("/{idRefeicao}")

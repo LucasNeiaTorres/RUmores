@@ -1,7 +1,5 @@
 from pydantic import BaseModel, Field
 from datetime import date
-from typing import List, Literal
-from app.models.prato import Prato
 
 class CardapioRequest(BaseModel):
     data: date = Field(..., example="2024-05-05")
