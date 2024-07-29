@@ -8,7 +8,7 @@ class AvaliacaoController:
     
     @classmethod
     def adicionarAvaliacao(cls, avaliacao: AvaliacaoRequest):
-        if not EstudanteController.getEstudante(avaliacao.idEstudante):
+        if not EstudanteController.getEstudante(avaliacao.idUsuario):
             return None
         if not PratoController.getPrato(avaliacao.idPrato):
             return None
@@ -35,13 +35,13 @@ class AvaliacaoController:
         avaliacao = cls.getAvaliacao(idAvaliacao)
         if avaliacao is None:
             return None
-        if not EstudanteController.getEstudante(nova_avaliacao.idEstudante):
+        if not EstudanteController.getEstudante(nova_avaliacao.idUsuario):
             return None
         if not PratoController.getPrato(nova_avaliacao.idPrato):
             return None
         avaliacao.nota = nova_avaliacao.nota
         avaliacao.comentario = nova_avaliacao.comentario
-        avaliacao.idEstudante = nova_avaliacao.idEstudante
+        avaliacao.idUsuario = nova_avaliacao.idUsuario
         avaliacao.idPrato = nova_avaliacao.idPrato
         return avaliacao
     
