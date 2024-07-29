@@ -12,8 +12,10 @@ router = APIRouter(
 
 @router.post("/", response_model=RefeicaoPrato)
 async def adicionarRefeicaoPrato(refeicaoPrato: RefeicaoPratoRequest):
-    novo_refeicaoPrato = RefeicaoPratoController.adicionarRefeicaoPrato(refeicaoPrato)
-    return novo_refeicaoPrato
+    nova_refeicaoPrato = RefeicaoPratoController.adicionarRefeicaoPrato(refeicaoPrato)
+    if nova_refeicaoPrato is None:
+        raise HTTPException(status_code=404, detail="Prato ou Refeição não encontrados")
+    return nova_refeicaoPrato
 
 @router.get("/{idRefeicaoPrato}", response_model=RefeicaoPrato)
 async def selecionaRefeicaoPrato(idRefeicaoPrato: int):
