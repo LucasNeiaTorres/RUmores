@@ -11,6 +11,8 @@ router = APIRouter(
 @router.post("/", response_model=Avaliacao)
 async def adicionarAvaliacao(avaliacao: AvaliacaoRequest):
     nova_avaliacao = AvaliacaoController.adicionarAvaliacao(avaliacao)
+    if nova_avaliacao is None:
+        raise HTTPException(status_code=404, detail="Estudante ou Prato não encontrado")
     return nova_avaliacao   
 
 @router.get("/{idAvaliacao}", response_model=Avaliacao)
@@ -24,7 +26,7 @@ async def selecionaAvaliacao(idAvaliacao: int):
 async def editarAvaliacao(idAvaliacao: int, nova_avaliacao: AvaliacaoRequest):
     avaliacao = AvaliacaoController.editarAvaliacao(idAvaliacao, nova_avaliacao)
     if avaliacao is None:
-        raise HTTPException(status_code=404, detail="Avaliacao não encontrada")
+        raise HTTPException(status_code=404, detail="Avaliacao, Estudante ou Prato não encontrados")
     return avaliacao
 
 @router.delete("/{idAvaliacao}")

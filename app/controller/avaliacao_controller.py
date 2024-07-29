@@ -1,4 +1,6 @@
 from app.models.avaliacao import Avaliacao, AvaliacaoRequest
+from app.controller.estudante_controller import EstudanteController
+from app.controller.prato_controller import PratoController
 
 class AvaliacaoController:
     listaAvaliacoes = []
@@ -6,6 +8,10 @@ class AvaliacaoController:
     
     @classmethod
     def adicionarAvaliacao(cls, avaliacao: AvaliacaoRequest):
+        if not EstudanteController.getEstudante(avaliacao.idEstudante):
+            return None
+        if not PratoController.getPrato(avaliacao.idPrato):
+            return None
         nova_avaliacao = Avaliacao(idAvaliacao=cls.id_counter, **avaliacao.dict())
         cls.id_counter += 1
         cls.listaAvaliacoes.append(nova_avaliacao)
@@ -29,8 +35,14 @@ class AvaliacaoController:
         avaliacao = cls.getAvaliacao(idAvaliacao)
         if avaliacao is None:
             return None
+        if not EstudanteController.getEstudante(nova_avaliacao.idEstudante):
+            return None
+        if not PratoController.getPrato(nova_avaliacao.idPrato):
+            return None
         avaliacao.nota = nova_avaliacao.nota
         avaliacao.comentario = nova_avaliacao.comentario
+        avaliacao.idEstudante = nova_avaliacao.idEstudante
+        avaliacao.idPrato = nova_avaliacao.idPrato
         return avaliacao
     
     @classmethod
