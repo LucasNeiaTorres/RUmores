@@ -7,6 +7,7 @@ class AvaliacaoRequest(BaseModel):
     idPrato: int = Field(..., example=1)
     estrelas: int = Field(..., example=1, min=1, max=5)
     descricao: str = Field(..., example="Estava ótimo")
+    idUsuario: int = Field(..., example=1)
     
     def getIdPrato(self):
         return self.data
@@ -31,6 +32,12 @@ class AvaliacaoRequest(BaseModel):
     
     def setDescricao(self, descricao: str):
         self.descricao = descricao
+        
+    def getIdUsuario(self):
+        return self.idUsuario
+    
+    def setIdUsuario(self, idUsuario: int):
+        self.idUsuario = idUsuario
     
 class Avaliacao(AvaliacaoRequest):
     idAvaliacao: int = Field(..., example=1)

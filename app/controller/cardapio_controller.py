@@ -30,8 +30,6 @@ class CardapioController:
         if cardapio is None:
             return None
         cardapio.data = novo_cardapio.data
-        cardapio.horario = novo_cardapio.horario
-        cardapio.pratos = novo_cardapio.pratos
         return cardapio
     
     @classmethod
