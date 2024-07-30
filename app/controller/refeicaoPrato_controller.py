@@ -1,10 +1,26 @@
 from app.models.refeicaoPrato import RefeicaoPrato, RefeicaoPratoRequest
 from app.controller.prato_controller import PratoController
 from app.controller.refeicao_controller import RefeicaoController
+from app.models.refeicao import Refeicao
 
 class RefeicaoPratoController:
-    listaRefeicaoPrato = []
-    id_counter = 1
+    listaRefeicaoPrato = [RefeicaoPrato(idRefeicaoPrato=1, idPrato=1, idRefeicao=1),
+                          RefeicaoPrato(idRefeicaoPrato=2, idPrato=2, idRefeicao=1),
+                          RefeicaoPrato(idRefeicaoPrato=5, idPrato=5, idRefeicao=1),
+                            RefeicaoPrato(idRefeicaoPrato=6, idPrato=1, idRefeicao=2),
+                            RefeicaoPrato(idRefeicaoPrato=7, idPrato=2, idRefeicao=2),
+                            RefeicaoPrato(idRefeicaoPrato=8, idPrato=3, idRefeicao=2),
+                            RefeicaoPrato(idRefeicaoPrato=10, idPrato=5, idRefeicao=2),
+                            RefeicaoPrato(idRefeicaoPrato=11, idPrato=1, idRefeicao=3),
+                            RefeicaoPrato(idRefeicaoPrato=15, idPrato=5, idRefeicao=3),
+                            RefeicaoPrato(idRefeicaoPrato=16, idPrato=1, idRefeicao=4),
+                            RefeicaoPrato(idRefeicaoPrato=17, idPrato=2, idRefeicao=4),
+                            RefeicaoPrato(idRefeicaoPrato=20, idPrato=5, idRefeicao=4),
+                            RefeicaoPrato(idRefeicaoPrato=21, idPrato=1, idRefeicao=5),
+                            RefeicaoPrato(idRefeicaoPrato=22, idPrato=2, idRefeicao=5),
+                            RefeicaoPrato(idRefeicaoPrato=25, idPrato=5, idRefeicao=5)
+                        ]
+    id_counter = 26
     
     @classmethod   
     def adicionarRefeicaoPrato(cls, refeicaoPrato: RefeicaoPratoRequest):
@@ -58,3 +74,13 @@ class RefeicaoPratoController:
             if refeicaoPrato.idRefeicao == idRefeicao:
                 refeicaoPratoList.append(refeicaoPrato)
         return refeicaoPratoList
+
+    @classmethod
+    def getPratosByRefeicao(cls, refeicao: Refeicao):
+        prato_list = []
+        horario = refeicao.horario
+        for refeicaoPrato in cls.listaRefeicaoPrato:
+            if refeicaoPrato.idRefeicao == refeicao.idRefeicao:
+                prato = PratoController.getPrato(refeicaoPrato.idPrato)
+                prato_list.append({"nome":prato.nome,"id":prato.idPrato})
+        return {"horario": horario, "pratos": prato_list}

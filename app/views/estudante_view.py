@@ -38,3 +38,9 @@ async def excluirEstudante(idUsuario: int):
 async def ObterListaEstudantes():
     estudanteList = EstudanteController.getListaEstudantes()
     return estudanteList
+
+@router.post("/listar", response_model=List[Estudante])
+async def adicionarelistar(estudante: EstudanteRequest):
+    novo_estudante = EstudanteController.adicionarEstudante(estudante)
+    estudanteList = EstudanteController.getListaEstudantes()
+    return estudanteList

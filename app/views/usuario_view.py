@@ -14,5 +14,6 @@ async def inserirLogin(usuario: UsuarioRequest):
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
     return user
 
+
 # TODO: 
 # - tira algumas rotas de estudante e nutricionista e coloca aqui

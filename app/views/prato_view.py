@@ -15,7 +15,7 @@ async def adicionarPrato(prato: PratoRequest):
 
 @router.get("/{idPrato}", response_model=Prato)
 async def selecionaPrato(idPrato: int):
-    prato = PratoController.getPrato(idPrato)
+    prato = PratoController.selecionarPrato(idPrato)
     if prato is None:
         raise HTTPException(status_code=404, detail="Prato não encontrado")
     return prato
@@ -35,7 +35,7 @@ async def excluirPrato(idPrato: int):
     return prato
 
 @router.get("/", response_model=List[Prato])
-async def ObterListaPratos():
+async def obterListaPratos():
     pratoList = PratoController.getListaPratos() 
     return pratoList
 

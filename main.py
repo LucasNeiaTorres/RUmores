@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from app.views import prato_view, estudante_view, nutricionista_view, cardapio_view, avaliacao_view, refeicao_view, refeicaoPrato_view, usuario_view
+from app.views import prato_view, estudante_view, nutricionista_view, cardapio_view, avaliacao_view, refeicao_view, refeicaoPrato_view, usuario_view, acessar_informacoes_nutricionais_view, adicionar_informacoes_nutricionais_view
 from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -10,6 +10,8 @@ app = FastAPI(
     version="0.0.1",
 )
 
+app.include_router(acessar_informacoes_nutricionais_view.router)
+app.include_router(adicionar_informacoes_nutricionais_view.router)
 app.include_router(prato_view.router)
 app.include_router(estudante_view.router)
 app.include_router(nutricionista_view.router)

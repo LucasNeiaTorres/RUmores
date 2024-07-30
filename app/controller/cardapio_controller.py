@@ -1,8 +1,13 @@
+from datetime import date
 from app.models.cardapio import Cardapio, CardapioRequest
 
 class CardapioController:
-    listaCardapio = []
-    id_counter = 1
+    listaCardapio = [Cardapio(idCardapio=1, data="2021-10-10"),
+                     Cardapio(idCardapio=2, data="2021-10-11"),
+                     Cardapio(idCardapio=3, data="2021-10-12"),
+                     Cardapio(idCardapio=4, data="2021-10-13"),
+                     Cardapio(idCardapio=5, data="2021-10-14")]
+    id_counter = 6
 
     @classmethod
     def adicionarCardapio(cls, cardapio: CardapioRequest):
@@ -16,6 +21,7 @@ class CardapioController:
         if len(cls.listaCardapio) == 0:
             return []
         return cls.listaCardapio
+
     
     @classmethod
     def getCardapio(cls, idCardapio: int):
@@ -41,7 +47,7 @@ class CardapioController:
         return None
     
     @classmethod
-    def getCardapioByDate(cls, data: str):
+    def getCardapioByDate(cls, data: date):
         for cardapio in cls.listaCardapio:
             if cardapio.data == data:
                 return cardapio

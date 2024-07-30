@@ -1,8 +1,13 @@
 from app.models.prato import Prato, PratoRequest
 
 class PratoController:
-    listaPratos = []
-    id_counter = 1
+    listaPratos = [Prato(idPrato=1, nome="Arroz", informacao_nutricional="Carboidrato"),
+                   Prato(idPrato=2, nome="Feijão", informacao_nutricional="Proteína"),
+                   Prato(idPrato=3, nome="Carne", informacao_nutricional="Proteína"),
+                   Prato(idPrato=4, nome="Salada", informacao_nutricional="Vitaminas"),
+                   Prato(idPrato=5, nome="Suco", informacao_nutricional="Vitaminas")]
+    id_counter = 6
+    prato_selecionado = None
 
     @classmethod
     def adicionarPrato(cls, prato: PratoRequest):
@@ -40,3 +45,15 @@ class PratoController:
                 cls.listaPratos.remove(prato)
                 return prato
         return None
+
+    @classmethod
+    def selecionarPrato(cls, idPrato: int):
+        prato = cls.getPrato(idPrato)
+        if prato is None:
+            return None
+        cls.prato_selecionado = prato.idPrato
+        return prato
+
+    @classmethod
+    def getPratoSelecionado(cls):
+        return cls.prato_selecionado

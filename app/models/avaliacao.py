@@ -4,7 +4,6 @@ from typing import Literal
 
 class AvaliacaoRequest(BaseModel):
     data: date = Field(..., example="2024-05-05")
-    idPrato: int = Field(..., example=1)
     estrelas: int = Field(..., example=1, min=1, max=5)
     descricao: str = Field(..., example="Estava ótimo")
     idUsuario: int = Field(..., example=1)
@@ -14,12 +13,6 @@ class AvaliacaoRequest(BaseModel):
     
     def setData(self, data: date):
         self.data = data
-        
-    def getIdPrato(self):
-        return self.idPrato
-    
-    def setIdPrato(self, idPrato: int):
-        self.idPrato = idPrato
         
     def getEstrelas(self):
         return self.estrelas
@@ -41,9 +34,17 @@ class AvaliacaoRequest(BaseModel):
     
 class Avaliacao(AvaliacaoRequest):
     idAvaliacao: int = Field(..., example=1)
+    idPrato: int = Field(..., example=1)
+
     
     def getIdAvaliacao(self):
         return self.idAvaliacao
     
     def setIdAvaliacao(self, idAvaliacao: int):
         self.idAvaliacao = idAvaliacao
+                
+    def getIdPrato(self):
+        return self.idPrato
+    
+    def setIdPrato(self, idPrato: int):
+        self.idPrato = idPrato
