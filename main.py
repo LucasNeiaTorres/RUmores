@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from app.views import prato_view, estudante_view, nutricionista_view, cardapio_view, avaliacao_view, refeicao_view, refeicaoPrato_view
+from app.views import prato_view, estudante_view, nutricionista_view, cardapio_view, avaliacao_view, refeicao_view, refeicaoPrato_view, usuario_view
 from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,9 +17,14 @@ app.include_router(cardapio_view.router)
 app.include_router(avaliacao_view.router)
 app.include_router(refeicao_view.router)
 app.include_router(refeicaoPrato_view.router)
+app.include_router(usuario_view.router)
 
-#TODO:
-# - Adicionar conexão entre listas e ids
+
+# TODO: linkar listas (Usuario - Estudante e Nutricionista) e apagar uma quando apaga outra
+
+# Perguntas:
+#     - Coloca as classes de Request para o diagrama de classes
+#     - BD
 
 # CORS
 origins = [
