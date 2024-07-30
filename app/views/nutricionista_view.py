@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from app.models.usuario import Nutricionista, UsuarioRequest
+from app.models.usuario import Nutricionista, NutricionistaRequest
 from app.controller.nutricionista_controller import NutricionistaController
 
 router = APIRouter(
@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=Nutricionista)
-async def adicionarNutricionista(nutricionista: UsuarioRequest):
+async def adicionarNutricionista(nutricionista: NutricionistaRequest):
     novo_nutricionista = NutricionistaController.adicionarNutricionista(nutricionista)
     return novo_nutricionista
 
@@ -21,7 +21,7 @@ async def selecionaNutricionista(idUsuario: int):
     return nutricionista
 
 @router.put("/{idUsuario}", response_model=Nutricionista)
-async def editarNutricionista(idUsuario: int, novo_nutricionista: UsuarioRequest):
+async def editarNutricionista(idUsuario: int, novo_nutricionista: NutricionistaRequest):
     nutricionista = NutricionistaController.editarNutricionista(idUsuario, novo_nutricionista)
     if nutricionista is None:
         raise HTTPException(status_code=404, detail="Nutricionista não encontrado")

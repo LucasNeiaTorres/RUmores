@@ -1,4 +1,5 @@
 from app.models.usuario import Nutricionista, UsuarioRequest
+from app.controller.usuario_controller import UsuarioController
 
 class NutricionistaController:
     listaNutricionistas = []
@@ -6,9 +7,10 @@ class NutricionistaController:
     
     @classmethod    
     def adicionarNutricionista(cls, nutricionista: UsuarioRequest):
-        novo_nutricionista = Nutricionista(idUsuario=cls.id_counter, tipo="nutricionista", **nutricionista.dict())
+        novo_nutricionista = Nutricionista(idUsuario=cls.id_counter, tipo="Nutricionista", **nutricionista.dict())
         cls.id_counter += 1
         cls.listaNutricionistas.append(novo_nutricionista)
+        UsuarioController.listaUsuarios.append(novo_nutricionista)
         return novo_nutricionista
     
     @classmethod

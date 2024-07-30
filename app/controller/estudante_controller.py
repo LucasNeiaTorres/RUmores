@@ -1,4 +1,5 @@
 from app.models.usuario import Estudante, UsuarioRequest
+from app.controller.usuario_controller import UsuarioController
 
 class EstudanteController:
     listaEstudantes = []
@@ -6,9 +7,10 @@ class EstudanteController:
     
     @classmethod
     def adicionarEstudante(cls, estudante: UsuarioRequest):
-        novo_estudante = Estudante(idUsuario=cls.id_counter, tipo="estudante", **estudante.dict())
+        novo_estudante = Estudante(idUsuario=cls.id_counter, tipo="Estudante", **estudante.dict())
         cls.id_counter += 1
         cls.listaEstudantes.append(novo_estudante)
+        UsuarioController.listaUsuarios.append(novo_estudante)
         return novo_estudante
     
     @classmethod

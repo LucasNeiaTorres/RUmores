@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Literal
 
 class UsuarioRequest(BaseModel):
     nome: str = Field(..., example="Bruno Aziz Spring")
@@ -25,15 +26,27 @@ class UsuarioRequest(BaseModel):
 
 class Usuario(UsuarioRequest):
     idUsuario: int = Field(..., example=1)
+    tipo: Literal["Estudante", "Nutricionista"] = Field(..., example="Estudante") 
     
     def getIdUsuario(self):
         return self.idUsuario
     
     def setIdUsuario(self, idUsuario: int):
         self.idUsuario = idUsuario
+        
+    def getTipo(self):
+        return self.tipo
     
-class Estudante(Usuario):
-    tipo: str = Field("estudante")
-
-class Nutricionista(Usuario):
-    tipo: str = Field("nutricionista")
+    def setTipo(self, tipo: Literal["Estudante", "Nutricionista"]):
+        self.tipo = tipo
+    
+class EstudanteRequest(UsuarioRequest):
+    grr: str = Field(..., example="GRR20200000")
+    
+class Estudante(Usuario, EstudanteRequest):
+    pass
+class NutricionistaRequest(UsuarioRequest):
+    crn: str = Field(..., example="CRN20200000")
+    
+class Nutricionista(Usuario, NutricionistaRequest):
+    pass

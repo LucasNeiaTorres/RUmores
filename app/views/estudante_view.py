@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from app.models.usuario import Estudante, UsuarioRequest
+from app.models.usuario import Estudante, EstudanteRequest
 from app.controller.estudante_controller import EstudanteController
 
 router = APIRouter(
@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=Estudante)
-async def adicionarEstudante(estudante: UsuarioRequest):
+async def adicionarEstudante(estudante: EstudanteRequest):
     novo_estudante = EstudanteController.adicionarEstudante(estudante)
     return novo_estudante
 
@@ -21,7 +21,7 @@ async def selecionaEstudante(idUsuario: int):
     return estudante
 
 @router.put("/{idUsuario}", response_model=Estudante)
-async def editarEstudante(idUsuario: int, novo_estudante: UsuarioRequest):
+async def editarEstudante(idUsuario: int, novo_estudante: EstudanteRequest):
     estudante = EstudanteController.editarEstudante(idUsuario, novo_estudante)
     if estudante is None:
         raise HTTPException(status_code=404, detail="Estudante não encontrado")
