@@ -1,6 +1,22 @@
 from pydantic import BaseModel, Field
 from typing import Literal
 
+class LoginRequest(BaseModel):
+    email: str = Field(..., example="bruninho@gmail.com")
+    senha: str = Field(..., example="123456")
+    
+    def getEmail(self):
+        return self.email
+    
+    def setEmail(self, email: str):
+        self.email = email
+        
+    def getSenha(self):
+        return self.senha
+    
+    def setSenha(self, senha: str):
+        self.senha = senha
+                       
 class UsuarioRequest(BaseModel):
     nome: str = Field(..., example="Bruno Aziz Spring")
     email: str = Field(..., example="bruninho@gmail.com")
