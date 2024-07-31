@@ -16,7 +16,6 @@ from app.views.prato_view import selecionaPrato as sp
 
 from datetime import date
 
-prato_selecionado = None
 
 router = APIRouter(
     prefix="/AcessarInfoNutricionais",
