@@ -22,8 +22,8 @@ from datetime import date
 
 
 router = APIRouter(
-    prefix="/AdicionarInfoNutricionais",
-    tags=["Adicionar Informacoes Nutricionais"],
+    prefix="/RegistrarReviewDePrato",
+    tags=["Registrar Review de Prato"],
 )
 
 @router.get("/pratos/")
@@ -40,7 +40,7 @@ async def selecionaPrato(idPrato: int):
     return prato
 
 @router.post("/avaliacao/", response_model=Avaliacao)
-async def adicionarAvaliacao(avaliacao: AvaliacaoRequest):
+async def insereAvaliacao(avaliacao: AvaliacaoRequest):
     prato_selecionado = PratoController.getPratoSelecionado()
     if prato_selecionado is None:
         raise HTTPException(status_code=404, detail="Prato não encontrado")

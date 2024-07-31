@@ -1,5 +1,6 @@
 from app.models.avaliacao import Avaliacao, AvaliacaoRequest
 from app.controller.estudante_controller import EstudanteController
+from app.controller.usuario_controller import UsuarioController
 from app.controller.prato_controller import PratoController
 
 class AvaliacaoController:
@@ -16,8 +17,7 @@ class AvaliacaoController:
 
     @classmethod
     def adicionarAvaliacao(cls, avaliacao: AvaliacaoRequest, idPrato: int):
-        print(idPrato)
-        if not EstudanteController.getEstudante(avaliacao.idUsuario):
+        if not UsuarioController.getUsuario(avaliacao.getIdUsuario()):
             return None
         if not PratoController.getPrato(idPrato):
             return None

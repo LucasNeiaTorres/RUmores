@@ -31,7 +31,6 @@ async def abrirCardapio(data: date):
         raise HTTPException(status_code=404, detail="Cardapio não encontrado")
     
     lista_refeicao = RefeicaoController.getRefeicaoByCardapio(cardapio.idCardapio)
-    #condicao se nulo
 
     lista_pratos = []
 
