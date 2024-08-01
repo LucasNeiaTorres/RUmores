@@ -1,24 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from app.models.usuario import Usuario, UsuarioRequest
-from app.controller.usuario_controller import UsuarioController
-from app.controller.cardapio_controller import CardapioController
 from app.controller.prato_controller import PratoController
-
-from app.models.cardapio import Cardapio, CardapioRequest
+from app.controller.usuario_controller import UsuarioController
 from app.models.prato import Prato
 from app.models.avaliacao import Avaliacao, AvaliacaoRequest
-from typing import List
-
-
-from app.controller.refeicao_controller import RefeicaoController
-from app.models.refeicao import Refeicao, RefeicaoRequest
-
-from app.controller.refeicaoPrato_controller import RefeicaoPratoController
-from app.models.refeicaoPrato import RefeicaoPrato, RefeicaoPratoRequest
+from app.models.usuario import Estudante, LoginRequest
 from app.views.prato_view import obterListaPratos, selecionaPrato as sp
 from app.views.avaliacao_view import adicionarAvaliacao as addAvaliacao
-
-from datetime import date
+from app.views.usuario_view import inserirLogin
 
 
 router = APIRouter(
@@ -26,14 +14,25 @@ router = APIRouter(
     tags=["Registrar Review de Prato"],
 )
 
+@router.post("/login_aluno", response_model=Estudante)
+async def loginAluno(estudante: LoginRequest):
+    user = await inserirLogin(estudante)
+    if user is None or user.getTipo() != "Estudante":
+        raise HTTPException(status_code=404, detail="Aluno não encontrado")
+    return user
+
 @router.get("/pratos/")
 async def pratosParaAvaliar():
+    if UsuarioController.getUsuarioLogado() is None or UsuarioController.getUsuarioLogado().getTipo() != "Estudante":
+        raise HTTPException(status_code=401, detail="Aluno não logado")
     pratoList = await obterListaPratos()
     return pratoList
 
 
 @router.get("/prato/{idPrato}", response_model=Prato)
 async def selecionaPrato(idPrato: int):
+    if UsuarioController.getUsuarioLogado() is None or UsuarioController.getUsuarioLogado().getTipo() != "Estudante":
+        raise HTTPException(status_code=401, detail="Aluno não logado")
     prato = await sp(idPrato)
     if prato is None:
         raise HTTPException(status_code=404, detail="Prato não encontrado")

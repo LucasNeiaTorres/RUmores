@@ -45,7 +45,7 @@ class PratoController:
     @classmethod
     def removePrato(cls, idPrato: int):
         for prato in cls.listaPratos:
-            if prato.idPrato == idPrato:
+            if prato.getIdPrato() == idPrato:
                 cls.listaPratos.remove(prato)
                 return prato
         return None
@@ -55,7 +55,7 @@ class PratoController:
         prato = cls.getPrato(idPrato)
         if prato is None:
             return None
-        cls.prato_selecionado = prato.idPrato
+        cls.prato_selecionado = prato.getIdPrato()
         return prato
 
     @classmethod

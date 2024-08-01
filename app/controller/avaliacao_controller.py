@@ -17,11 +17,12 @@ class AvaliacaoController:
 
     @classmethod
     def adicionarAvaliacao(cls, avaliacao: AvaliacaoRequest, idPrato: int):
-        if not UsuarioController.getUsuarioLogado():
+        id_usuario_logado = UsuarioController.getUsuarioLogado().getIdUsuario()
+        if not id_usuario_logado:
             return None
         if not PratoController.getPrato(idPrato):
             return None
-        nova_avaliacao = Avaliacao(idAvaliacao=cls.id_counter, idPrato=idPrato, **avaliacao.dict())
+        nova_avaliacao = Avaliacao(idAvaliacao=cls.id_counter, idPrato=idPrato, idUsuario=id_usuario_logado, **avaliacao.dict())
         cls.id_counter += 1
         cls.listaAvaliacoes.append(nova_avaliacao)
         return nova_avaliacao
