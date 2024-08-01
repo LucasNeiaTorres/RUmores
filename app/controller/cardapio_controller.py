@@ -71,3 +71,12 @@ class CardapioController:
             lista_pratos.append(RefeicaoPratoController.getPratosByRefeicao(refeicao))
 
         return lista_pratos
+    
+    @classmethod 
+    def abrirCardapioGeral(cls):
+        lista_cardapios = []
+        for cardapio in cls.listaCardapio:
+            pratos_dia = []
+            pratos_dia.append(cls.abrirCardapioDia(cardapio.getData()))
+            lista_cardapios.append({"dia": cardapio.getData(), "refeições": pratos_dia})
+        return lista_cardapios
