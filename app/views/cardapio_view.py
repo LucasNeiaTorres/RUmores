@@ -2,11 +2,22 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from app.models.cardapio import Cardapio, CardapioRequest
 from app.controller.cardapio_controller import CardapioController
+from app.controller.refeicaoPrato_controller import RefeicaoPratoController
+from app.controller.refeicao_controller import RefeicaoController
+from datetime import date
+
 
 router = APIRouter(
     prefix="/cardapio",
     tags=["cardapio"],
 )
+
+@router.get("/dia/{data}")
+async def abrirCardapio(data: date):
+    lista_pratos = CardapioController.abrirCardapioDia(data)
+    if lista_pratos is None:
+        raise HTTPException(status_code=404, detail="Cardápio não encontrado")
+    return lista_pratos
 
 @router.post("/", response_model=Cardapio)
 async def adicionarCardapio(cardapio: CardapioRequest):

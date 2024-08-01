@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from app.controller.cardapio_controller import CardapioController
 from app.models.prato import Prato
-from typing import List
 
 
 from app.controller.refeicao_controller import RefeicaoController
 from app.controller.refeicaoPrato_controller import RefeicaoPratoController
 from app.views.prato_view import selecionaPrato as sp
+# from app.views.abrir_cardapio_view import abrirCardapio
 
 from datetime import date
 
@@ -18,18 +18,9 @@ router = APIRouter(
 
 @router.get("/cardapio/{data}")
 async def abrirCardapio(data: date):
-    
-    cardapio = CardapioController.getCardapioByDate(data)
-    if cardapio is None:
-        raise HTTPException(status_code=404, detail="Cardapio não encontrado")
-    
-    lista_refeicao = RefeicaoController.getRefeicaoByCardapio(cardapio.idCardapio)
-
-    lista_pratos = []
-
-    for refeicao in lista_refeicao:
-        lista_pratos.append(RefeicaoPratoController.getPratosByRefeicao(refeicao))
-
+    lista_pratos = CardapioController.abrirCardapioDia(data)
+    if lista_pratos is None:
+        raise HTTPException(status_code=404, detail="Cardápio não encontrado")
     return lista_pratos
 
 @router.get("/prato/{idPrato}", response_model=Prato)

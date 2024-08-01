@@ -10,7 +10,7 @@ from app.views.usuario_view import inserirLogin
 
 
 router = APIRouter(
-    prefix="/RegistrarReviewDePrato",
+    prefix="/RegistrarReviewPrato",
     tags=["Registrar Review de Prato"],
 )
 

@@ -52,3 +52,22 @@ class CardapioController:
             if cardapio.data == data:
                 return cardapio
         return None
+    
+    @classmethod
+    def abrirCardapioDia(cls, data: date):
+        # importa aqui para não dar circular import
+        from app.controller.refeicaoPrato_controller import RefeicaoPratoController
+        from app.controller.refeicao_controller import RefeicaoController
+        
+        cardapio = cls.getCardapioByDate(data)
+        if cardapio is None:
+            return None
+        
+        lista_refeicao = RefeicaoController.getRefeicaoByCardapio(cardapio.getIdCardapio())
+
+        lista_pratos = []
+
+        for refeicao in lista_refeicao:
+            lista_pratos.append(RefeicaoPratoController.getPratosByRefeicao(refeicao))
+
+        return lista_pratos
