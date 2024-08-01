@@ -11,6 +11,8 @@ router = APIRouter(
 @router.post("/", response_model=Prato)
 async def adicionarPrato(prato: PratoRequest):
     novo_prato = PratoController.adicionarPrato(prato)
+    if novo_prato is None:
+        raise HTTPException(status_code=401, detail="Prato já existente")
     return novo_prato
 
 @router.get("/{idPrato}", response_model=Prato)

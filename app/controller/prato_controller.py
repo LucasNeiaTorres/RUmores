@@ -11,6 +11,10 @@ class PratoController:
 
     @classmethod
     def adicionarPrato(cls, prato: PratoRequest):
+        # verificar se o prato já existe
+        for prato_ in cls.listaPratos:
+            if prato_.getNome() == prato.getNome():
+                return None
         novo_prato = Prato(idPrato=cls.id_counter, **prato.dict())
         cls.id_counter += 1
         cls.listaPratos.append(novo_prato)

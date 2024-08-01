@@ -41,6 +41,3 @@ async def editarPrato(idPrato: int, novo_prato: PratoRequest):
     if prato is None:
         raise HTTPException(status_code=404, detail="Prato não encontrado")
     return prato
-
-# TODO: 
-# - tira algumas rotas de estudante e nutricionista e coloca aqui
