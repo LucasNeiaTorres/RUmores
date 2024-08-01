@@ -5,19 +5,19 @@ from app.controller.prato_controller import PratoController
 
 class AvaliacaoController:
     listaAvaliacoes = [
-        Avaliacao(idAvaliacao=1,data="2024-11-01", idUsuario=1, idPrato=1, estrelas=5, descricao="Muito bom!"),
-        Avaliacao(idAvaliacao=6,data="2024-11-01", idUsuario=2, idPrato=1, estrelas=4, descricao="Muito ok!"),
-        Avaliacao(idAvaliacao=7,data="2024-11-01", idUsuario=3, idPrato=1, estrelas=5, descricao="Já comi melhores."),
-        Avaliacao(idAvaliacao=2,data="2024-11-01", idUsuario=2, idPrato=2, estrelas=4, descricao="Bom!"),
-        Avaliacao(idAvaliacao=3,data="2024-11-01", idUsuario=3, idPrato=3, estrelas=3, descricao="Regular!"),
-        Avaliacao(idAvaliacao=4,data="2024-11-01", idUsuario=4, idPrato=4, estrelas=2, descricao="Ruim!"),
-        Avaliacao(idAvaliacao=8,data="2024-11-01", idUsuario=3, idPrato=4, estrelas=5, descricao="A tia da cantina é muito legal! Comi muito!"),
-        Avaliacao(idAvaliacao=5,data="2024-11-01", idUsuario=5, idPrato=5, estrelas=1, descricao="Muito ruim!")]
+        Avaliacao(idAvaliacao=1,data="2024-11-01", idUsuario=1, idPrato=1, nota=5, comentario="Muito bom!"),
+        Avaliacao(idAvaliacao=6,data="2024-11-01", idUsuario=2, idPrato=1, nota=4, comentario="Muito ok!"),
+        Avaliacao(idAvaliacao=7,data="2024-11-01", idUsuario=3, idPrato=1, nota=5, comentario="Já comi melhores."),
+        Avaliacao(idAvaliacao=2,data="2024-11-01", idUsuario=2, idPrato=2, nota=4, comentario="Bom!"),
+        Avaliacao(idAvaliacao=3,data="2024-11-01", idUsuario=3, idPrato=3, nota=3, comentario="Regular!"),
+        Avaliacao(idAvaliacao=4,data="2024-11-01", idUsuario=4, idPrato=4, nota=2, comentario="Ruim!"),
+        Avaliacao(idAvaliacao=8,data="2024-11-01", idUsuario=3, idPrato=4, nota=5, comentario="A tia da cantina é muito legal! Comi muito!"),
+        Avaliacao(idAvaliacao=5,data="2024-11-01", idUsuario=5, idPrato=5, nota=1, comentario="Muito ruim!")]
     id_counter = 9
 
     @classmethod
     def adicionarAvaliacao(cls, avaliacao: AvaliacaoRequest, idPrato: int):
-        if not UsuarioController.getUsuario(avaliacao.getIdUsuario()):
+        if not UsuarioController.getUsuarioLogado():
             return None
         if not PratoController.getPrato(idPrato):
             return None

@@ -4,9 +4,8 @@ from typing import Literal
 
 class AvaliacaoRequest(BaseModel):
     data: date = Field(..., example="2024-05-05")
-    estrelas: int = Field(..., example=1, min=1, max=5)
-    descricao: str = Field(..., example="Estava ótimo")
-    idUsuario: int = Field(..., example=1)
+    nota: int = Field(..., example=1, min=1, max=5)
+    comentario: str = Field(..., example="Estava ótimo")
     
     def getIdPrato(self):
         return self.data
@@ -14,27 +13,23 @@ class AvaliacaoRequest(BaseModel):
     def setData(self, data: date):
         self.data = data
         
-    def getEstrelas(self):
-        return self.estrelas
+    def getNota(self):
+        return self.nota
     
-    def setEstrelas(self, estrelas: int):
-        self.estrelas = estrelas
+    def setNota(self, nota: int):
+        self.nota = nota
         
-    def getDescricao(self):
-        return self.descricao
+    def getComentario(self):
+        return self.comentario
     
-    def setDescricao(self, descricao: str):
-        self.descricao = descricao
+    def setComentario(self, comentario: str):
+        self.comentario = comentario
         
-    def getIdUsuario(self):
-        return self.idUsuario
-    
-    def setIdUsuario(self, idUsuario: int):
-        self.idUsuario = idUsuario
     
 class Avaliacao(AvaliacaoRequest):
     idAvaliacao: int = Field(..., example=1)
     idPrato: int = Field(..., example=1)
+    idUsuario: int = Field(..., example=1)
 
     
     def getIdAvaliacao(self):
@@ -48,3 +43,9 @@ class Avaliacao(AvaliacaoRequest):
     
     def setIdPrato(self, idPrato: int):
         self.idPrato = idPrato
+        
+    def getIdUsuario(self):
+        return self.idUsuario
+    
+    def setIdUsuario(self, idUsuario: int):
+        self.idUsuario = idUsuario
