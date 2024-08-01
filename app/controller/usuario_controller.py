@@ -10,11 +10,13 @@ class UsuarioController:
         Nutricionista(idUsuario=4, tipo="Nutricionista", nome="Nutri2 Aziz Spring", email="nutr2@gmail.com", senha="123456", crn="CRN20200001")
     ]
     id_counter = 5
+    usuario_logado: Union[Estudante, Nutricionista] = None
     
     @classmethod
     def login(cls, usuario: LoginRequest):
         for user in cls.listaUsuarios:
             if user.getEmail() == usuario.getEmail() and user.getSenha() == usuario.getSenha():
+                cls.usuario_logado = user
                 return user
         return None
     
@@ -34,6 +36,11 @@ class UsuarioController:
             if usuario.getIdUsuario() == idUsuario:
                 return usuario
         return None
+    
+    
+    @classmethod
+    def getUsuarioLogado(cls):
+        return cls.usuario_logado
     
     # @classmethod
     # def editarUsuario(cls, idUsuario: int, novo_usuario: UsuarioRequest):
