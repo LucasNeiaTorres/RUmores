@@ -38,8 +38,8 @@ class PratoController:
         prato = cls.getPrato(idPrato)
         if prato is None:
             return None
-        prato.nome = novo_prato.nome
-        prato.informacao_nutricional = novo_prato.informacao_nutricional
+        prato.setNome(novo_prato.getNome())
+        prato.setInformacaoNutricional(novo_prato.getInformacaoNutricional())
         return prato
     
     @classmethod
