@@ -78,9 +78,19 @@ class RefeicaoPratoController:
     @classmethod
     def getPratosByRefeicao(cls, refeicao: Refeicao):
         prato_list = []
-        horario = refeicao.horario
+        horario = refeicao.getHorario()
         for refeicaoPrato in cls.listaRefeicaoPrato:
-            if refeicaoPrato.idRefeicao == refeicao.idRefeicao:
-                prato = PratoController.getPrato(refeicaoPrato.idPrato)
-                prato_list.append({"nome":prato.nome,"id":prato.idPrato})
+            if refeicaoPrato.idRefeicao == refeicao.getIdRefeicao():
+                prato = PratoController.getPrato(refeicaoPrato.getIdPrato())
+                # prato_list.append({"nome":prato.nome,"id":prato.idPrato})
+                prato_list.append(prato.getNome())
         return {"horario": horario, "pratos": prato_list}
+
+    @classmethod
+    def isPratoInRefeicao(cls, idPrato: int, idRefeicao: int):
+        for refeicaoPrato in cls.listaRefeicaoPrato:
+            print(refeicaoPrato.getIdPrato(), refeicaoPrato.getIdRefeicao())
+            print(idPrato, idRefeicao)
+            if refeicaoPrato.getIdPrato() == idPrato and refeicaoPrato.getIdRefeicao() == idRefeicao:
+                return True
+        return False

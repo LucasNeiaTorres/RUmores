@@ -34,6 +34,13 @@ class PratoController:
         return None
     
     @classmethod
+    def getPratoByNome(cls, nome: str):
+        for prato in cls.listaPratos:
+            if prato.getNome() == nome:
+                return prato
+        return None
+    
+    @classmethod
     def editarPrato(cls, idPrato: int, novo_prato: PratoRequest):
         prato = cls.getPrato(idPrato)
         if prato is None:

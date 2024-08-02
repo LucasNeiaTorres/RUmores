@@ -8,6 +8,7 @@ class CardapioController:
                      Cardapio(idCardapio=4, data="2021-10-13"),
                      Cardapio(idCardapio=5, data="2021-10-14")]
     id_counter = 6
+    cardapio_selecionado = None
 
     @classmethod
     def adicionarCardapio(cls, cardapio: CardapioRequest):
@@ -63,6 +64,8 @@ class CardapioController:
         if cardapio is None:
             return None
         
+        cls.cardapio_selecionado = cardapio.getIdCardapio()
+        
         lista_refeicao = RefeicaoController.getRefeicaoByCardapio(cardapio.getIdCardapio())
 
         lista_pratos = []
@@ -80,3 +83,21 @@ class CardapioController:
             pratos_dia.append(cls.abrirCardapioDia(cardapio.getData()))
             lista_cardapios.append({"dia": cardapio.getData(), "refeições": pratos_dia})
         return lista_cardapios
+    
+    @classmethod
+    def getCardapioSelecionado(cls):
+        return cls.cardapio_selecionado
+
+    @classmethod
+    def getRefeicaoCardapio(cls, refeicao: str, idCardapio: int):
+        from app.controller.refeicao_controller import RefeicaoController
+        cardapio = cls.getCardapio(idCardapio)
+        for ref in RefeicaoController.getRefeicaoByCardapio(cardapio.getIdCardapio()):
+            if ref.getHorario() == refeicao:
+                return ref
+        return None
+    
+    @classmethod
+    def getDataCardapioSelecionado(cls):
+        data = cls.getCardapio(cls.cardapio_selecionado).getData()
+        return data
