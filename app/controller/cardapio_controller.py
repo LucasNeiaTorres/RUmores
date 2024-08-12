@@ -1,5 +1,6 @@
 from datetime import date
 from app.models.cardapio import Cardapio
+from fastapi import HTTPException
 
 class CardapioController:
     listaCardapio = [Cardapio(idCardapio=1, data="2021-10-10"),
@@ -94,3 +95,27 @@ class CardapioController:
     def getDataCardapioSelecionado(cls):
         data = cls.getCardapio(cls.cardapio_selecionado).getData()
         return data
+    
+    @classmethod
+    def atribuirPratoCardapio(cls, nome_prato: str, horario_refeicao: str):
+        from app.controller.prato_controller import PratoController
+        from app.controller.refeicao_controller import RefeicaoController
+        from app.controller.refeicaoPrato_controller import RefeicaoPratoController
+        
+        if cls.cardapio_selecionado is None:
+            return None
+        cardapio = cls.getCardapio(cls.cardapio_selecionado)
+        
+        prato = PratoController.getPratoByNome(nome_prato)
+        if prato is None:
+            return None
+        
+        ref = cls.getRefeicaoCardapio(horario_refeicao, cardapio.getIdCardapio())
+        if ref is None:
+            ref = RefeicaoController.adicionarRefeicao(horario_refeicao, cardapio.getIdCardapio())
+            
+        if RefeicaoPratoController.isPratoInRefeicao(prato.getIdPrato(), ref.getIdRefeicao()):
+            return None
+        RefeicaoPratoController.adicionarRefeicaoPrato(prato.getIdPrato(), ref.getIdRefeicao())
+        
+        return cls.abrirCardapioDia(cls.getDataCardapioSelecionado())

@@ -58,25 +58,9 @@ async def atribuirPratoCardapio(nome_prato: str, horario_refeicao: Literal["Caf�
     if UsuarioController.getUsuarioLogado() is None or UsuarioController.getUsuarioLogado().getTipo() != "Nutricionista":
         raise HTTPException(status_code=401, detail="Nutricionista não logado")
     
-    cardapio = CardapioController.getCardapioSelecionado()
-    if cardapio is None:
-        raise HTTPException(status_code=401, detail="Cardápio não selecionado")
-    
-    prato = PratoController.getPratoByNome(nome_prato)
-    if prato is None:
-        raise HTTPException(status_code=404, detail="Prato não encontrado")
-    
-    ref = CardapioController.getRefeicaoCardapio(horario_refeicao, cardapio)
-    # verifica se refeição já existe
-    if ref is None:
-        # adiciona refeicao se não existe
-        ref = RefeicaoController.adicionarRefeicao(horario_refeicao, cardapio)
-    
-    if RefeicaoPratoController.isPratoInRefeicao(prato.getIdPrato(), ref.getIdRefeicao()):
-        raise HTTPException(status_code=404, detail="Prato já cadastrado nessa refeição")
-    else:
-        RefeicaoPratoController.adicionarRefeicaoPrato(prato.getIdPrato(), ref.getIdRefeicao())
-    lista_pratos = CardapioController.abrirCardapioDia(CardapioController.getDataCardapioSelecionado())
+    lista_pratos = CardapioController.atribuirPratoCardapio(nome_prato, horario_refeicao)
+    if lista_pratos is None:
+        raise HTTPException(status_code=404, detail="Erro ao atribuir prato")
     return lista_pratos
 
 

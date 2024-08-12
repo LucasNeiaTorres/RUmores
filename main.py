@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from app.views import prato_view, estudante_view, nutricionista_view, cardapio_view, avaliacao_view, refeicao_view, refeicaoPrato_view, registrar_review_de_prato_view, usuario_view, acessar_informacoes_nutricionais_view, adicionar_informacoes_nutricionais_view, adicionar_cardapio_do_dia_view
+from app.views import registrar_review_de_prato_view, acessar_informacoes_nutricionais_view, adicionar_informacoes_nutricionais_view, adicionar_cardapio_do_dia_view, utils_view
 from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,14 +14,7 @@ app.include_router(acessar_informacoes_nutricionais_view.router)
 app.include_router(adicionar_informacoes_nutricionais_view.router)
 app.include_router(registrar_review_de_prato_view.router)
 app.include_router(adicionar_cardapio_do_dia_view.router)
-app.include_router(prato_view.router)
-# app.include_router(estudante_view.router)
-# app.include_router(nutricionista_view.router)
-app.include_router(cardapio_view.router)
-app.include_router(avaliacao_view.router)
-app.include_router(refeicao_view.router)
-# app.include_router(refeicaoPrato_view.router)
-app.include_router(usuario_view.router)
+app.include_router(utils_view.router)
 
 
 # TODO: 

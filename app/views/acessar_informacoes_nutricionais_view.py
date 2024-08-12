@@ -1,17 +1,21 @@
 from fastapi import APIRouter, HTTPException
 from app.controller.cardapio_controller import CardapioController
 from app.models.prato import Prato
+from app.models.cardapio import Cardapio
 from app.controller.prato_controller import PratoController
-
-# from app.views.abrir_cardapio_view import abrirCardapio
-
 from datetime import date
+from typing import List
 
 
 router = APIRouter(
     prefix="/AcessarInfoNutricionais",
     tags=["Acessar Informações Nutricionais"],
 )
+
+@router.get("/calendario/", response_model=List[Cardapio])
+async def calendario():
+    cardapioList = CardapioController.getListaCardapio() 
+    return cardapioList
 
 @router.get("/cardapio/{data}")
 async def abrirCardapio(data: date):
@@ -26,7 +30,3 @@ async def selecionaPrato(idPrato: int):
     if prato is None:
         raise HTTPException(status_code=404, detail="Prato não encontrado")
     return prato
-
-
-# TODO: 
-# - tira algumas rotas de estudante e nutricionista e coloca aqui
