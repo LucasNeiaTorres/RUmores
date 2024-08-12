@@ -44,24 +44,6 @@ class RefeicaoController:
         return None
     
     @classmethod
-    def editarRefeicao(cls, idRefeicao: int, nova_refeicao: RefeicaoRequest):
-        refeicao = cls.getRefeicao(idRefeicao)
-        if refeicao is None:
-            return None
-        if not CardapioController.getCardapio(refeicao.idCardapio):
-            return None
-        refeicao.horario = nova_refeicao.horario
-        return refeicao
-    
-    @classmethod 
-    def removeRefeicao(cls, idRefeicao: int):
-        for refeicao in cls.listaRefeicao:
-            if refeicao.idRefeicao == idRefeicao:
-                cls.listaRefeicao.remove(refeicao)
-                return refeicao
-        return None
-    
-    @classmethod
     def getRefeicaoByHorario(cls, horario: str):
         for refeicao in cls.listaRefeicao:
             if refeicao.horario == horario:

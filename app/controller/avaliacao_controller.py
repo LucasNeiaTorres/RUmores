@@ -1,5 +1,5 @@
 from app.models.avaliacao import Avaliacao, AvaliacaoRequest
-from app.controller.estudante_controller import EstudanteController
+from app.controller.usuario_controller import UsuarioController
 from app.controller.usuario_controller import UsuarioController
 from app.controller.prato_controller import PratoController
 
@@ -22,7 +22,7 @@ class AvaliacaoController:
             return None
         if not PratoController.getPrato(idPrato):
             return None
-        nova_avaliacao = Avaliacao(idAvaliacao=cls.id_counter, idPrato=idPrato, idUsuario=id_usuario_logado, **avaliacao.dict())
+        nova_avaliacao = Avaliacao(idAvaliacao=cls.getIdCounter(), idPrato=idPrato, idUsuario=id_usuario_logado, **avaliacao.dict())
         cls.id_counter += 1
         cls.listaAvaliacoes.append(nova_avaliacao)
         return nova_avaliacao
@@ -34,30 +34,5 @@ class AvaliacaoController:
         return cls.listaAvaliacoes
     
     @classmethod
-    def getAvaliacao(cls, idAvaliacao: int):
-        for avaliacao in cls.listaAvaliacoes:
-            if avaliacao.idAvaliacao == idAvaliacao:
-                return avaliacao
-        return None
-    
-    @classmethod
-    def editarAvaliacao(cls, idAvaliacao: int, nova_avaliacao: AvaliacaoRequest, idPrato: int):
-        avaliacao = cls.getAvaliacao(idAvaliacao)
-        if avaliacao is None:
-            return None
-        if not EstudanteController.getEstudante(nova_avaliacao.idUsuario):
-            return None
-        if not PratoController.getPrato(idPrato):
-            return None
-        avaliacao.nota = nova_avaliacao.nota
-        avaliacao.comentario = nova_avaliacao.comentario
-        avaliacao.idUsuario = nova_avaliacao.idUsuario
-        return avaliacao
-    
-    @classmethod
-    def removeAvaliacao(cls, idAvaliacao: int):
-        for avaliacao in cls.listaAvaliacoes:
-            if avaliacao.idAvaliacao == idAvaliacao:
-                cls.listaAvaliacoes.remove(avaliacao)
-                return avaliacao
-        return None
+    def getIdCounter(cls):
+        return cls.id_counter   

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.models.prato import Prato, PratoRequest
-from app.models.usuario import Nutricionista, LoginRequest
+from app.models.usuario import Nutricionista
 from typing import List
 from app.views.prato_view import selecionaPrato as sp, adicionarPrato as ap, obterListaPratos, editarPrato as ep
 from app.views.usuario_view import inserirLogin
@@ -12,8 +12,8 @@ router = APIRouter(
 )
 
 @router.post("/login_nutricionista", response_model=Nutricionista)
-async def loginNutricionista(nutricionista: LoginRequest):
-    user = await inserirLogin(nutricionista)
+async def loginNutricionista(email: str, senha: str):
+    user = await inserirLogin(email, senha)
     if user is None or user.getTipo() != "Nutricionista":
         raise HTTPException(status_code=404, detail="Nutricionista não encontrado")
     return user

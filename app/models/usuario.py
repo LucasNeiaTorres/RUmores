@@ -1,21 +1,5 @@
 from pydantic import BaseModel, Field
 from typing import Literal
-
-class LoginRequest(BaseModel):
-    email: str = Field(..., example="bruninho@gmail.com")
-    senha: str = Field(..., example="123456")
-    
-    def getEmail(self):
-        return self.email
-    
-    def setEmail(self, email: str):
-        self.email = email
-        
-    def getSenha(self):
-        return self.senha
-    
-    def setSenha(self, senha: str):
-        self.senha = senha
                        
 class UsuarioRequest(BaseModel):
     nome: str = Field(..., example="Bruno Aziz Spring")
@@ -34,7 +18,7 @@ class UsuarioRequest(BaseModel):
     def setEmail(self, email: str):
         self.email = email
         
-    def getSenha(self):
+    def getSenha(self): 
         return self.senha
     
     def setSenha(self, senha: str):
@@ -56,13 +40,21 @@ class Usuario(UsuarioRequest):
     def setTipo(self, tipo: Literal["Estudante", "Nutricionista"]):
         self.tipo = tipo
     
-class EstudanteRequest(UsuarioRequest):
+    
+class Estudante(Usuario):
     grr: str = Field(..., example="GRR20200000")
     
-class Estudante(Usuario, EstudanteRequest):
-    pass
-class NutricionistaRequest(UsuarioRequest):
+    def getGrr(self):
+        return self.grr
+    
+    def setGrr(self, grr: str):
+        self.grr = grr
+    
+class Nutricionista(Usuario): 
     crn: str = Field(..., example="CRN20200000")
     
-class Nutricionista(Usuario, NutricionistaRequest):
-    pass
+    def getCrn(self):
+        return self.crn
+    
+    def setCrn(self, crn: str): 
+        self.crn = crn

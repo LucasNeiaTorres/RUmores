@@ -1,4 +1,4 @@
-from app.models.usuario import Usuario, UsuarioRequest, LoginRequest
+
 from app.models.usuario import Estudante, Nutricionista
 from typing import List, Union
 
@@ -13,9 +13,9 @@ class UsuarioController:
     usuario_logado: Union[Estudante, Nutricionista] = None
     
     @classmethod
-    def login(cls, usuario: LoginRequest):
+    def login(cls, email: str, senha: str):
         for user in cls.listaUsuarios:
-            if user.getEmail() == usuario.getEmail() and user.getSenha() == usuario.getSenha():
+            if user.getEmail() == email and user.getSenha() == senha:
                 cls.usuario_logado = user
                 return user
         return None
@@ -41,24 +41,6 @@ class UsuarioController:
     @classmethod
     def getUsuarioLogado(cls):
         return cls.usuario_logado
-    
-    # @classmethod
-    # def editarUsuario(cls, idUsuario: int, novo_usuario: UsuarioRequest):
-    #     usuario = cls.getUsuario(idUsuario)
-    #     if usuario is None:
-    #         return None
-    #     usuario.nome = novo_usuario.nome
-    #     usuario.email = novo_usuario.email
-    #     usuario.senha = novo_usuario.senha
-    #     return usuario
-    
-    @classmethod
-    def removeUsuario(cls, idUsuario: int):
-        for usuario in cls.listaUsuarios:
-            if usuario.getIdUsuario() == idUsuario:
-                cls.listaUsuarios.remove(usuario)
-                return usuario
-        return None
     
     @classmethod
     def getListaUsuarios(cls):

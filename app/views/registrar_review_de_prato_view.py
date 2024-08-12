@@ -3,7 +3,7 @@ from app.controller.prato_controller import PratoController
 from app.controller.usuario_controller import UsuarioController
 from app.models.prato import Prato
 from app.models.avaliacao import Avaliacao, AvaliacaoRequest
-from app.models.usuario import Estudante, LoginRequest
+from app.models.usuario import Estudante
 from app.views.prato_view import obterListaPratos, selecionaPrato as sp
 from app.views.avaliacao_view import adicionarAvaliacao as addAvaliacao
 from app.views.usuario_view import inserirLogin
@@ -15,8 +15,8 @@ router = APIRouter(
 )
 
 @router.post("/login_aluno", response_model=Estudante)
-async def loginAluno(estudante: LoginRequest):
-    user = await inserirLogin(estudante)
+async def loginAluno(email: str, senha: str):
+    user = await inserirLogin(email, senha)
     if user is None or user.getTipo() != "Estudante":
         raise HTTPException(status_code=404, detail="Aluno não encontrado")
     return user

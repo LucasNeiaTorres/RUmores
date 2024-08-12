@@ -10,6 +10,7 @@ router = APIRouter(
 
 @router.post("/{idPrato}/", response_model=Avaliacao)
 async def adicionarAvaliacao(avaliacao: AvaliacaoRequest, idPrato: int):
+    # TODO: TIRA IDPRATO
     nova_avaliacao = AvaliacaoController.adicionarAvaliacao(avaliacao, idPrato)
     if nova_avaliacao is None:
         raise HTTPException(status_code=404, detail="Estudante ou Prato não encontrado")

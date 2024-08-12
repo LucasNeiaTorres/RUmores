@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.models.usuario import Usuario, UsuarioRequest, LoginRequest
+from app.models.usuario import Usuario
 from app.controller.usuario_controller import UsuarioController
 from typing import List
 
@@ -9,8 +9,8 @@ router = APIRouter(
 )
 
 @router.post("/login", response_model=Usuario)
-async def inserirLogin(usuario: LoginRequest):
-    user = UsuarioController.login(usuario)
+async def inserirLogin(email: str, senha: str):
+    user = UsuarioController.login(email, senha)
     if user is None:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
     return user

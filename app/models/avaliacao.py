@@ -7,7 +7,7 @@ class AvaliacaoRequest(BaseModel):
     nota: int = Field(..., example=1, min=1, max=5)
     comentario: str = Field(..., example="Estava ótimo")
     
-    def getIdPrato(self):
+    def getData(self):
         return self.data
     
     def setData(self, data: date):

@@ -39,12 +39,6 @@ class RefeicaoPratoController:
             return []
         return cls.listaRefeicaoPrato
     
-    @classmethod
-    def getRefeicaoPrato(cls, idRefeicaoPrato: int):
-        for refeicaoPrato in cls.listaRefeicaoPrato:
-            if refeicaoPrato.idRefeicaoPrato == idRefeicaoPrato:
-                return refeicaoPrato
-        return None
     
     @classmethod
     def editarRefeicaoPrato(cls, idRefeicaoPrato: int, novo_refeicaoPrato: RefeicaoPratoRequest):
@@ -59,13 +53,6 @@ class RefeicaoPratoController:
         refeicaoPrato.idRefeicao = novo_refeicaoPrato.idRefeicao
         return refeicaoPrato
     
-    @classmethod
-    def removeRefeicaoPrato(cls, idRefeicaoPrato: int):
-        for refeicaoPrato in cls.listaRefeicaoPrato:
-            if refeicaoPrato.idRefeicaoPrato == idRefeicaoPrato:
-                cls.listaRefeicaoPrato.remove(refeicaoPrato)
-                return refeicaoPrato
-        return None
     
     @classmethod
     def getRefeicaoPratoByRefeicao(cls, idRefeicao: int):

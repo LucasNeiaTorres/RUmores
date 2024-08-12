@@ -49,13 +49,6 @@ class PratoController:
         prato.setInformacaoNutricional(novo_prato.getInformacaoNutricional())
         return prato
     
-    @classmethod
-    def removePrato(cls, idPrato: int):
-        for prato in cls.listaPratos:
-            if prato.getIdPrato() == idPrato:
-                cls.listaPratos.remove(prato)
-                return prato
-        return None
 
     @classmethod
     def selecionarPrato(cls, idPrato: int):
