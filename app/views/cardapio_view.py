@@ -1,9 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from app.models.cardapio import Cardapio, CardapioRequest
+from app.models.cardapio import Cardapio
 from app.controller.cardapio_controller import CardapioController
-from app.controller.refeicaoPrato_controller import RefeicaoPratoController
-from app.controller.refeicao_controller import RefeicaoController
 from datetime import date
 
 
@@ -20,8 +18,8 @@ async def abrirCardapio(data: date):
     return lista_pratos
 
 @router.post("/", response_model=Cardapio)
-async def adicionarCardapio(cardapio: CardapioRequest):
-    novo_cardapio = CardapioController.adicionarCardapio(cardapio)
+async def adicionarCardapio(data: date):
+    novo_cardapio = CardapioController.adicionarCardapio(data)
     return novo_cardapio
 
 @router.get("/{idCardapio}", response_model=Cardapio)
@@ -31,12 +29,7 @@ async def selecionaCardapio(idCardapio: int):
         raise HTTPException(status_code=404, detail="Cardapio não encontrado")
     return cardapio
 
-@router.put("/{idCardapio}", response_model=Cardapio)
-async def editarCardapio(idCardapio: int, novo_cardapio: CardapioRequest):
-    cardapio = CardapioController.editarCardapio(idCardapio, novo_cardapio)
-    if cardapio is None:
-        raise HTTPException(status_code=404, detail="Cardapio não encontrado")
-    return cardapio
+# @router.put("/{i 
 
 @router.delete("/{idCardapio}")
 async def excluirCardapio(idCardapio: int):

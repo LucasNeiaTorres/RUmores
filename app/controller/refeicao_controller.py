@@ -1,5 +1,7 @@
-from app.models.refeicao import Refeicao, RefeicaoRequest
+from app.models.refeicao import Refeicao
 from app.controller.cardapio_controller import CardapioController
+from typing import Literal
+
 
 class RefeicaoController:
     listaRefeicao = [Refeicao(idRefeicao=1, idCardapio=1, horario="Almoço"),
@@ -22,10 +24,10 @@ class RefeicaoController:
     id_counter = 16
     
     @classmethod
-    def adicionarRefeicao(cls, refeicao: RefeicaoRequest):
-        if not CardapioController.getCardapio(refeicao.idCardapio):
+    def adicionarRefeicao(cls, idCardapio: int, horario: Literal["Café da manhã", "Almoço", "Janta"]):
+        if not CardapioController.getCardapio(idCardapio):
             return None
-        nova_refeicao = Refeicao(idRefeicao=cls.id_counter, **refeicao.dict())
+        nova_refeicao = Refeicao(idRefeicao=cls.id_counter, idCardapio=idCardapio, horario=horario)
         cls.id_counter += 1
         cls.listaRefeicao.append(nova_refeicao)
         return nova_refeicao

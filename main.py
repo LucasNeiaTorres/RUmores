@@ -20,7 +20,7 @@ app.include_router(prato_view.router)
 app.include_router(cardapio_view.router)
 app.include_router(avaliacao_view.router)
 app.include_router(refeicao_view.router)
-app.include_router(refeicaoPrato_view.router)
+# app.include_router(refeicaoPrato_view.router)
 app.include_router(usuario_view.router)
 
 

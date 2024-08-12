@@ -15,7 +15,7 @@ class PratoController:
         for prato_ in cls.listaPratos:
             if prato_.getNome() == prato.getNome():
                 return None
-        novo_prato = Prato(idPrato=cls.id_counter, **prato.dict())
+        novo_prato = Prato(idPrato=cls.getIdCounter(), **prato.dict())
         cls.id_counter += 1
         cls.listaPratos.append(novo_prato)
         return novo_prato
@@ -25,6 +25,10 @@ class PratoController:
         if len(cls.listaPratos) == 0:
             return []
         return cls.listaPratos 
+    
+    @classmethod
+    def getIdCounter(cls):
+        return cls.id_counter   
     
     @classmethod
     def getPrato(cls, idPrato: int):

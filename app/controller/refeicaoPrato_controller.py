@@ -1,4 +1,4 @@
-from app.models.refeicaoPrato import RefeicaoPrato, RefeicaoPratoRequest
+from app.models.refeicaoPrato import RefeicaoPrato
 from app.controller.prato_controller import PratoController
 from app.controller.refeicao_controller import RefeicaoController
 from app.models.refeicao import Refeicao
@@ -23,12 +23,12 @@ class RefeicaoPratoController:
     id_counter = 26
     
     @classmethod   
-    def adicionarRefeicaoPrato(cls, refeicaoPrato: RefeicaoPratoRequest):
-        if not PratoController.getPrato(refeicaoPrato.idPrato):
+    def adicionarRefeicaoPrato(cls, idPrato: int, idRefeicao: int):
+        if not PratoController.getPrato(idPrato):
             return None
-        if not RefeicaoController.getRefeicao(refeicaoPrato.idRefeicao):
+        if not RefeicaoController.getRefeicao(idRefeicao):
             return None
-        novo_refeicaoPrato = RefeicaoPrato(idRefeicaoPrato=cls.id_counter, **refeicaoPrato.dict())
+        novo_refeicaoPrato = RefeicaoPrato(idRefeicaoPrato=cls.id_counter, idPrato=idPrato, idRefeicao=idRefeicao)
         cls.id_counter += 1
         cls.listaRefeicaoPrato.append(novo_refeicaoPrato)
         return novo_refeicaoPrato
@@ -40,18 +40,18 @@ class RefeicaoPratoController:
         return cls.listaRefeicaoPrato
     
     
-    @classmethod
-    def editarRefeicaoPrato(cls, idRefeicaoPrato: int, novo_refeicaoPrato: RefeicaoPratoRequest):
-        refeicaoPrato = cls.getRefeicaoPrato(idRefeicaoPrato)
-        if refeicaoPrato is None:
-            return None
-        if not PratoController.getPrato(novo_refeicaoPrato.idPrato):
-            return None
-        if not RefeicaoController.getRefeicao(novo_refeicaoPrato.idRefeicao):
-            return None
-        refeicaoPrato.idPrato = novo_refeicaoPrato.idPrato
-        refeicaoPrato.idRefeicao = novo_refeicaoPrato.idRefeicao
-        return refeicaoPrato
+    # @classmethod
+    # def editarRefeicaoPrato(cls, idRefeicaoPrato: int, novo_refeicaoPrato: RefeicaoPratoRequest):
+    #     refeicaoPrato = cls.getRefeicaoPrato(idRefeicaoPrato)
+    #     if refeicaoPrato is None:
+    #         return None
+    #     if not PratoController.getPrato(novo_refeicaoPrato.idPrato):
+    #         return None
+    #     if not RefeicaoController.getRefeicao(novo_refeicaoPrato.idRefeicao):
+    #         return None
+    #     refeicaoPrato.idPrato = novo_refeicaoPrato.idPrato
+    #     refeicaoPrato.idRefeicao = novo_refeicaoPrato.idRefeicao
+    #     return refeicaoPrato
     
     
     @classmethod

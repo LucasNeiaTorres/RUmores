@@ -5,8 +5,6 @@ from app.controller.usuario_controller import UsuarioController
 from app.controller.prato_controller import PratoController
 from app.controller.refeicaoPrato_controller import RefeicaoPratoController
 from app.controller.refeicao_controller import RefeicaoController
-from app.models.refeicao import RefeicaoRequest
-from app.models.refeicaoPrato import RefeicaoPratoRequest
 from datetime import date
 from typing import Literal
 
@@ -72,12 +70,12 @@ async def atribuirPratoCardapio(nome_prato: str, horario_refeicao: Literal["Caf�
     # verifica se refeição já existe
     if ref is None:
         # adiciona refeicao se não existe
-        ref = RefeicaoController.adicionarRefeicao(RefeicaoRequest(horario=horario_refeicao, idCardapio=cardapio))
+        ref = RefeicaoController.adicionarRefeicao(horario_refeicao, cardapio)
     
     if RefeicaoPratoController.isPratoInRefeicao(prato.getIdPrato(), ref.getIdRefeicao()):
         raise HTTPException(status_code=404, detail="Prato já cadastrado nessa refeição")
     else:
-        RefeicaoPratoController.adicionarRefeicaoPrato(RefeicaoPratoRequest(idPrato=prato.getIdPrato(), idRefeicao=ref.getIdRefeicao()))
+        RefeicaoPratoController.adicionarRefeicaoPrato(prato.getIdPrato(), ref.getIdRefeicao())
     lista_pratos = CardapioController.abrirCardapioDia(CardapioController.getDataCardapioSelecionado())
     return lista_pratos
 

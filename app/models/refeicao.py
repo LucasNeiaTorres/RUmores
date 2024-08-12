@@ -1,7 +1,8 @@
 from pydantic import BaseModel, Field
 from typing import Literal
 
-class RefeicaoRequest(BaseModel):
+class Refeicao(BaseModel):
+    idRefeicao: int = Field(..., example=1)
     horario: Literal["Café da manhã", "Almoço", "Janta"] = Field(..., example="Almoço")
     idCardapio: int = Field(..., example=1)
      
@@ -17,11 +18,9 @@ class RefeicaoRequest(BaseModel):
     def setIdCardapio(self, idCardapio: int):
         self.idCardapio = idCardapio
         
-class Refeicao(RefeicaoRequest):
-    idRefeicao: int = Field(..., example=1)
-    
     def getIdRefeicao(self):
         return self.idRefeicao
     
     def setIdRefeicao(self, idRefeicao: int):
         self.idRefeicao = idRefeicao
+        

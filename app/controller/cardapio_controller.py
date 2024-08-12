@@ -1,5 +1,5 @@
 from datetime import date
-from app.models.cardapio import Cardapio, CardapioRequest
+from app.models.cardapio import Cardapio
 
 class CardapioController:
     listaCardapio = [Cardapio(idCardapio=1, data="2021-10-10"),
@@ -11,8 +11,8 @@ class CardapioController:
     cardapio_selecionado = None
 
     @classmethod
-    def adicionarCardapio(cls, cardapio: CardapioRequest):
-        novo_cardapio = Cardapio(idCardapio=cls.id_counter, **cardapio.dict())
+    def adicionarCardapio(cls, data: date):
+        novo_cardapio = Cardapio(idCardapio=cls.id_counter, data=data)
         cls.id_counter += 1
         cls.listaCardapio.append(novo_cardapio)
         return novo_cardapio
@@ -27,28 +27,21 @@ class CardapioController:
     @classmethod
     def getCardapio(cls, idCardapio: int):
         for cardapio in cls.listaCardapio:
-            if cardapio.idCardapio == idCardapio:
+            if cardapio.getIdCardapio() == idCardapio:
                 return cardapio
         return None
     
-    @classmethod
-    def editarCardapio(cls, idCardapio: int, novo_cardapio: CardapioRequest):
-        cardapio = cls.getCardapio(idCardapio)
-        if cardapio is None:
-            return None
-        cardapio.data = novo_cardapio.data
-        return cardapio
+    # @classmethod
+    # def editarCardapio(cls, idCardapio: int, data: date):
+    #     cardapio = cls.getCardapio(idCardapio)
+    #     if cardapio is None:
+    #         return None
+    #     cardapio.data = data
+    #     return cardapio
+    
     
     @classmethod
-    def removeCardapio(cls, idCardapio: int):
-        for cardapio in cls.listaCardapio:
-            if cardapio.idCardapio == idCardapio:
-                cls.listaCardapio.remove(cardapio)
-                return cardapio
-        return None
-    
-    @classmethod
-    def getCardapioByDate(cls, data: date):
+    def getCardapioByData(cls, data: date):
         for cardapio in cls.listaCardapio:
             if cardapio.data == data:
                 return cardapio
@@ -60,7 +53,7 @@ class CardapioController:
         from app.controller.refeicaoPrato_controller import RefeicaoPratoController
         from app.controller.refeicao_controller import RefeicaoController
         
-        cardapio = cls.getCardapioByDate(data)
+        cardapio = cls.getCardapioByData(data)
         if cardapio is None:
             return None
         

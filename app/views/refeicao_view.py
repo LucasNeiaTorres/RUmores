@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from app.models.refeicao import Refeicao, RefeicaoRequest
+from app.models.refeicao import Refeicao
 from app.controller.refeicao_controller import RefeicaoController
+from typing import Literal
 
 router = APIRouter(
     prefix="/refeicao",
@@ -9,8 +10,8 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=Refeicao)
-async def adicionarRefeicao(refeicao: RefeicaoRequest):
-    nova_refeicao = RefeicaoController.adicionarRefeicao(refeicao)
+async def adicionarRefeicao(horario: Literal["Café da manhã", "Almoço", "Janta"], idCardapio: int):
+    nova_refeicao = RefeicaoController.adicionarRefeicao(horario, idCardapio)   
     if nova_refeicao is None:
         raise HTTPException(status_code=404, detail="Cardápio não encontrado")
     return nova_refeicao
@@ -20,13 +21,6 @@ async def selecionaRefeicao(idRefeicao: int):
     refeicao = RefeicaoController.getRefeicao(idRefeicao)
     if refeicao is None:
         raise HTTPException(status_code=404, detail="Refeição não encontrada")
-    return refeicao
-
-@router.put("/{idRefeicao}", response_model=Refeicao)
-async def editarRefeicao(idRefeicao: int, nova_refeicao: RefeicaoRequest):
-    refeicao = RefeicaoController.editarRefeicao(idRefeicao, nova_refeicao)
-    if refeicao is None:
-        raise HTTPException(status_code=404, detail="Refeição ou Cardápio não encontrados")
     return refeicao
 
 @router.delete("/{idRefeicao}")
